@@ -51,9 +51,6 @@ final class ItemNormalizer extends BaseItemNormalizer
         $this->identifiersExtractor = $identifiersExtractor;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supportsNormalization($data, $format = null, array $context = []): bool
     {
         if (!\is_object($data) || is_iterable($data)) {
@@ -66,8 +63,6 @@ final class ItemNormalizer extends BaseItemNormalizer
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws UnexpectedValueException
      *
      * @return array|string|int|float|bool|\ArrayObject|null
@@ -91,26 +86,18 @@ final class ItemNormalizer extends BaseItemNormalizer
         return $data;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function normalizeCollectionOfRelations($propertyMetadata, $attributeValue, string $resourceClass, ?string $format, array $context): array
     {
         // to-many are handled directly by the GraphQL resolver
         return [];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supportsDenormalization($data, $type, $format = null, array $context = []): bool
     {
         return self::FORMAT === $format && parent::supportsDenormalization($data, $type, $format, $context);
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return array|bool
      */
     protected function getAllowedAttributes($classOrObject, array $context, $attributesAsString = false)
@@ -125,9 +112,6 @@ final class ItemNormalizer extends BaseItemNormalizer
         return $allowedAttributes;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setAttributeValue($object, $attribute, $value, $format = null, array $context = []): void
     {
         if ('_id' === $attribute) {

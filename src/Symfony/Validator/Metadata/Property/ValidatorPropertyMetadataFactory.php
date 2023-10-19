@@ -85,9 +85,6 @@ final class ValidatorPropertyMetadataFactory implements PropertyMetadataFactoryI
         $this->restrictionsMetadata = $restrictionsMetadata;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function create(string $resourceClass, string $property, array $options = []): ApiProperty
     {
         $propertyMetadata = $this->decorated->create($resourceClass, $property, $options);
@@ -116,7 +113,7 @@ final class ValidatorPropertyMetadataFactory implements PropertyMetadataFactoryI
                     $required = true;
                 }
 
-                $type = self::SCHEMA_MAPPED_CONSTRAINTS[\get_class($constraint)] ?? null;
+                $type = self::SCHEMA_MAPPED_CONSTRAINTS[$constraint::class] ?? null;
 
                 if ($type && !\in_array($type, $types, true)) {
                     $types[] = $type;

@@ -40,17 +40,11 @@ final class TraceableChainDataPersister implements ContextAwareDataPersisterInte
         return $this->persistersResponse;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supports($data, array $context = []): bool
     {
         return $this->decorated->supports($data, $context);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function persist($data, array $context = [])
     {
         $this->tracePersisters($data, $context);
@@ -58,9 +52,6 @@ final class TraceableChainDataPersister implements ContextAwareDataPersisterInte
         return $this->decorated->persist($data, $context);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function remove($data, array $context = [])
     {
         $this->tracePersisters($data, $context);
@@ -73,9 +64,8 @@ final class TraceableChainDataPersister implements ContextAwareDataPersisterInte
         $found = false;
         foreach ($this->persisters as $persister) {
             if (
-                ($this->persistersResponse[\get_class($persister)] = $found ? false : $persister->supports($data, $context))
-                &&
-                !($persister instanceof ResumableDataPersisterInterface && $persister->resumable()) && !$found
+                ($this->persistersResponse[$persister::class] = $found ? false : $persister->supports($data, $context))
+                && !($persister instanceof ResumableDataPersisterInterface && $persister->resumable()) && !$found
             ) {
                 $found = true;
             }

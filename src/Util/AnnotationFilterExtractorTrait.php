@@ -33,7 +33,7 @@ trait AnnotationFilterExtractorTrait
      *
      * @return \Iterator only ApiFilter annotations
      */
-    private function getFilterAnnotations(\Reflector $reflector, ?Reader $reader = null): \Iterator
+    private function getFilterAnnotations(\Reflector $reflector, Reader $reader = null): \Iterator
     {
         if (\PHP_VERSION_ID >= 80000) {
             $attributes = $reflector->getAttributes(ApiFilter::class) ?: $reflector->getAttributes(ApiFilterMetadata::class);
@@ -49,7 +49,7 @@ trait AnnotationFilterExtractorTrait
 
         $miscAnnotations = $reflector instanceof \ReflectionClass ? $reader->getClassAnnotations($reflector) : $reader->getPropertyAnnotations($reflector);
         foreach ($miscAnnotations as $miscAnnotation) {
-            if (ApiFilter::class === \get_class($miscAnnotation)) {
+            if (ApiFilter::class === $miscAnnotation::class) {
                 yield $miscAnnotation;
             }
         }

@@ -46,19 +46,11 @@ final class DocumentNormalizer extends ObjectNormalizer
         $this->resourceMetadataFactory = $resourceMetadataFactory;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supportsDenormalization($data, $type, $format = null, array $context = []): bool
     {
         return self::FORMAT === $format && parent::supportsDenormalization($data, $type, $format, $context); // @phpstan-ignore-line symfony bc-layer
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @return mixed
-     */
     public function denormalize($data, $class, $format = null, array $context = [])
     {
         if (\is_string($data['_id'] ?? null) && \is_array($data['_source'] ?? null)) {
@@ -68,9 +60,6 @@ final class DocumentNormalizer extends ObjectNormalizer
         return parent::denormalize($data, $class, $format, $context);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supportsNormalization($data, $format = null, array $context = []): bool
     {
         // prevent the use of lower priority normalizers (e.g. serializer.normalizer.object) for this format
@@ -78,8 +67,6 @@ final class DocumentNormalizer extends ObjectNormalizer
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws LogicException
      *
      * @return array|string|int|float|bool|\ArrayObject|null

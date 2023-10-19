@@ -38,8 +38,6 @@ final class ItemNormalizer implements NormalizerInterface, DenormalizerInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws LogicException
      */
     public function hasCacheableSupportsMethod(): bool
@@ -52,11 +50,7 @@ final class ItemNormalizer implements NormalizerInterface, DenormalizerInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws LogicException
-     *
-     * @return mixed
      */
     public function denormalize($data, $type, $format = null, array $context = [])
     {
@@ -68,8 +62,6 @@ final class ItemNormalizer implements NormalizerInterface, DenormalizerInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws LogicException
      */
     public function supportsDenormalization($data, $type, $format = null, array $context = []): bool
@@ -81,25 +73,17 @@ final class ItemNormalizer implements NormalizerInterface, DenormalizerInterface
         return DocumentNormalizer::FORMAT !== $format && $this->decorated->supportsDenormalization($data, $type, $format, $context); // @phpstan-ignore-line symfony bc-layer
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function normalize($object, $format = null, array $context = [])
     {
         return $this->decorated->normalize($object, $format, $context);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supportsNormalization($data, $format = null, array $context = []): bool
     {
         return DocumentNormalizer::FORMAT !== $format && $this->decorated->supportsNormalization($data, $format);
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws LogicException
      */
     public function setSerializer(SerializerInterface $serializer)

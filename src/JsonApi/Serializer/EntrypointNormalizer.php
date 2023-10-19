@@ -57,8 +57,6 @@ final class EntrypointNormalizer implements NormalizerInterface, CacheableSuppor
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return array|string|int|float|bool|\ArrayObject|null
      */
     public function normalize($object, $format = null, array $context = [])
@@ -105,17 +103,11 @@ final class EntrypointNormalizer implements NormalizerInterface, CacheableSuppor
         return $entrypoint;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supportsNormalization($data, $format = null, array $context = []): bool
     {
         return self::FORMAT === $format && $data instanceof Entrypoint;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function hasCacheableSupportsMethod(): bool
     {
         return true;

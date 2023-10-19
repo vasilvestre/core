@@ -45,8 +45,6 @@ final class ErrorNormalizer implements NormalizerInterface, CacheableSupportsMet
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return array|string|int|float|bool|\ArrayObject|null
      */
     public function normalize($object, $format = null, array $context = [])
@@ -65,17 +63,11 @@ final class ErrorNormalizer implements NormalizerInterface, CacheableSupportsMet
         return $data;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supportsNormalization($data, $format = null, array $context = []): bool
     {
         return self::FORMAT === $format && ($data instanceof \Exception || $data instanceof FlattenException || $data instanceof LegacyFlattenException);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function hasCacheableSupportsMethod(): bool
     {
         return true;

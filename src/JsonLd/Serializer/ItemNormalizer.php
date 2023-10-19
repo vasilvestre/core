@@ -58,17 +58,12 @@ final class ItemNormalizer extends AbstractItemNormalizer
         $this->contextBuilder = $contextBuilder;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supportsNormalization($data, $format = null, array $context = []): bool
     {
         return self::FORMAT === $format && parent::supportsNormalization($data, $format, $context);
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws LogicException
      *
      * @return array|string|int|float|bool|\ArrayObject|null
@@ -137,20 +132,13 @@ final class ItemNormalizer extends AbstractItemNormalizer
         return $metadata + $data;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supportsDenormalization($data, $type, $format = null, array $context = []): bool
     {
         return self::FORMAT === $format && parent::supportsDenormalization($data, $type, $format, $context);
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws NotNormalizableValueException
-     *
-     * @return mixed
      */
     public function denormalize($data, $class, $format = null, array $context = [])
     {

@@ -85,9 +85,6 @@ final class ValidatorPropertyMetadataFactory implements PropertyMetadataFactoryI
         $this->restrictionsMetadata = $restrictionsMetadata;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function create(string $resourceClass, string $property, array $options = []): PropertyMetadata
     {
         $propertyMetadata = $this->decorated->create($resourceClass, $property, $options);
@@ -116,7 +113,7 @@ final class ValidatorPropertyMetadataFactory implements PropertyMetadataFactoryI
                 }
 
                 if (null === $iri) {
-                    $iri = self::SCHEMA_MAPPED_CONSTRAINTS[\get_class($constraint)] ?? null;
+                    $iri = self::SCHEMA_MAPPED_CONSTRAINTS[$constraint::class] ?? null;
                 }
 
                 foreach ($this->restrictionsMetadata as $restrictionMetadata) {

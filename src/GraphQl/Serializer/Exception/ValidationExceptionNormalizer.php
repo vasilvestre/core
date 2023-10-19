@@ -35,9 +35,6 @@ final class ValidationExceptionNormalizer implements NormalizerInterface
         $this->exceptionToStatus = $exceptionToStatus;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function normalize($object, $format = null, array $context = []): array
     {
         /** @var ValidationException */
@@ -45,7 +42,7 @@ final class ValidationExceptionNormalizer implements NormalizerInterface
         $error = FormattedError::createFromException($object);
         $error['message'] = $validationException->getMessage();
 
-        $exceptionClass = \get_class($validationException);
+        $exceptionClass = $validationException::class;
         $statusCode = Response::HTTP_UNPROCESSABLE_ENTITY;
 
         foreach ($this->exceptionToStatus as $class => $status) {
@@ -70,9 +67,6 @@ final class ValidationExceptionNormalizer implements NormalizerInterface
         return $error;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supportsNormalization($data, $format = null, array $context = []): bool
     {
         return $data instanceof Error && $data->getPrevious() instanceof ValidationException;

@@ -47,7 +47,7 @@ final class ValidationExceptionListener
         if (!$exception instanceof ConstraintViolationListAwareExceptionInterface && !$exception instanceof FilterValidationException) {
             return;
         }
-        $exceptionClass = \get_class($exception);
+        $exceptionClass = $exception::class;
         $statusCode = Response::HTTP_UNPROCESSABLE_ENTITY;
 
         foreach ($this->exceptionToStatus as $class => $status) {

@@ -54,7 +54,7 @@ final class TraceableChainItemDataProvider implements ItemDataProviderInterface,
         $result = null;
 
         foreach ($this->dataProviders as $dataProvider) {
-            $this->providersResponse[\get_class($dataProvider)] = $match ? null : false;
+            $this->providersResponse[$dataProvider::class] = $match ? null : false;
             if ($match) {
                 continue;
             }
@@ -75,9 +75,9 @@ final class TraceableChainItemDataProvider implements ItemDataProviderInterface,
                 }
 
                 $result = $dataProvider->getItem($resourceClass, $identifier, $operationName, $context);
-                $this->providersResponse[\get_class($dataProvider)] = $match = true;
+                $this->providersResponse[$dataProvider::class] = $match = true;
             } catch (ResourceClassNotSupportedException $e) {
-                @trigger_error(sprintf('Throwing a "%s" is deprecated in favor of implementing "%s"', \get_class($e), RestrictedDataProviderInterface::class), \E_USER_DEPRECATED);
+                @trigger_error(sprintf('Throwing a "%s" is deprecated in favor of implementing "%s"', $e::class, RestrictedDataProviderInterface::class), \E_USER_DEPRECATED);
                 continue;
             }
         }

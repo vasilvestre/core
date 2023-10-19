@@ -58,17 +58,12 @@ final class ItemNormalizer extends AbstractItemNormalizer
         parent::__construct($propertyNameCollectionFactory, $propertyMetadataFactory, $iriConverter, $resourceClassResolver, $propertyAccessor, $nameConverter, null, null, false, $defaultContext, $dataTransformers, $resourceMetadataFactory, $resourceAccessChecker);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supportsNormalization($data, $format = null, array $context = []): bool
     {
         return self::FORMAT === $format && parent::supportsNormalization($data, $format, $context);
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return array|string|int|float|bool|\ArrayObject|null
      */
     public function normalize($object, $format = null, array $context = [])
@@ -128,20 +123,13 @@ final class ItemNormalizer extends AbstractItemNormalizer
         return $document;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supportsDenormalization($data, $type, $format = null, array $context = []): bool
     {
         return self::FORMAT === $format && parent::supportsDenormalization($data, $type, $format, $context);
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws NotNormalizableValueException
-     *
-     * @return mixed
      */
     public function denormalize($data, $class, $format = null, array $context = [])
     {
@@ -174,25 +162,17 @@ final class ItemNormalizer extends AbstractItemNormalizer
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getAttributes($object, $format = null, array $context = []): array
     {
         return $this->getComponents($object, $format, $context)['attributes'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setAttributeValue($object, $attribute, $value, $format = null, array $context = []): void
     {
         parent::setAttributeValue($object, $attribute, \is_array($value) && \array_key_exists('data', $value) ? $value['data'] : $value, $format, $context);
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see http://jsonapi.org/format/#document-resource-object-linkage
      *
      * @param ApiProperty|PropertyMetadata $propertyMetadata
@@ -214,8 +194,6 @@ final class ItemNormalizer extends AbstractItemNormalizer
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @param ApiProperty|PropertyMetadata $propertyMetadata
      *
      * @see http://jsonapi.org/format/#document-resource-object-linkage
@@ -252,9 +230,6 @@ final class ItemNormalizer extends AbstractItemNormalizer
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function isAllowedAttribute($classOrObject, $attribute, $format = null, array $context = []): bool
     {
         return preg_match('/^\\w[-\\w_]*$/', $attribute) && parent::isAllowedAttribute($classOrObject, $attribute, $format, $context);
@@ -381,8 +356,6 @@ final class ItemNormalizer extends AbstractItemNormalizer
 
     /**
      * Populates included keys.
-     *
-     * @param mixed $object
      */
     private function getRelatedResources($object, ?string $format, array $context, array $relationships): array
     {
@@ -459,7 +432,7 @@ final class ItemNormalizer extends AbstractItemNormalizer
         $normalizedName = $this->nameConverter ? $this->nameConverter->normalize($relationshipName, $context['resource_class'], self::FORMAT, $context) : $relationshipName;
 
         $filtered = array_filter($context['api_included'] ?? [], static function (string $included) use ($normalizedName) {
-            return 0 === strpos($included, $normalizedName.'.');
+            return str_starts_with($included, $normalizedName.'.');
         });
 
         return array_map(static function (string $nested) {

@@ -105,7 +105,7 @@ class ValidationExceptionListenerTest extends TestCase
         (new ValidationExceptionListener(
             $serializerProphecy->reveal(),
             ['hydra' => ['application/ld+json']],
-            [\get_class($exception) => Response::HTTP_BAD_REQUEST]
+            [$exception::class => Response::HTTP_BAD_REQUEST]
         ))->onKernelException($exceptionEvent);
 
         $response = $exceptionEvent->getResponse();
